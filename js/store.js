@@ -21,6 +21,12 @@
 
   function matches(entry, q) {
     if (!q) return true;
+    if (entry.type === "section") {
+      return (entry.title || "").toLowerCase().includes(q);
+    }
+    if (entry.type === "help") {
+      return (entry.text || "").toLowerCase().includes(q);
+    }
     const hay = `${entry.name || ""} ${entry.cmd || ""} ${entry.desc || ""}`.toLowerCase();
     return hay.includes(q);
   }
@@ -58,46 +64,88 @@
     }, 1200);
   }
 
+  function renderHelp(entry) {
+    const el = document.createElement("p");
+    el.className = "help-line";
+    el.textContent = entry.text;
+    return el;
+  }
+
+  function renderSection(entry) {
+    const el = document.createElement("h3");
+    el.className = "section-title";
+    el.textContent = entry.title;
+    return el;
+  }
+
+  function renderRow(entry, inlineDesc) {
+    const row = document.createElement("article");
+    row.className = "row";
+
+    const main = document.createElement("div");
+    main.className = "row-main";
+
+    const name = document.createElement("h2");
+    name.className = "row-name";
+    name.textContent = entry.name;
+
+    const cmdLine = document.createElement("p");
+    cmdLine.className = "row-cmd";
+
+    const cmd = document.createElement("span");
+    cmd.className = "cmd-text";
+    cmd.textContent = entry.cmd;
+    cmdLine.append(cmd);
+
+    if (inlineDesc && entry.desc) {
+      const desc = document.createElement("span");
+      desc.className = "cmd-desc";
+      desc.textContent = ` — ${entry.desc}`;
+      cmdLine.append(desc);
+    }
+
+    main.append(name, cmdLine);
+
+    if (!inlineDesc && entry.desc) {
+      const desc = document.createElement("p");
+      desc.className = "row-desc";
+      desc.textContent = entry.desc;
+      main.append(desc);
+    }
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "copy-btn";
+    btn.textContent = "COPY";
+    btn.setAttribute("aria-label", `Copy ${entry.cmd}`);
+    btn.addEventListener("click", () => copyText(entry.cmd, btn));
+
+    row.append(main, btn);
+    return row;
+  }
+
   function render() {
     const q = (search.value || "").trim().toLowerCase();
     const list = entriesFor(activeTab).filter((e) => matches(e, q));
     catalog.innerHTML = "";
+
+    const copyable = list.filter((e) => e.cmd);
     empty.classList.toggle("hidden", list.length > 0);
-    countLabel.textContent = `${list.length} command${list.length === 1 ? "" : "s"}`;
+    countLabel.textContent = `${copyable.length} command${copyable.length === 1 ? "" : "s"}`;
 
     const frag = document.createDocumentFragment();
+    const inlineDesc = activeTab === "curses";
+
     for (const entry of list) {
-      const row = document.createElement("article");
-      row.className = "row";
-
-      const main = document.createElement("div");
-      main.className = "row-main";
-
-      const name = document.createElement("h2");
-      name.className = "row-name";
-      name.textContent = entry.name;
-
-      const cmd = document.createElement("p");
-      cmd.className = "row-cmd";
-      cmd.textContent = entry.cmd;
-
-      main.append(name, cmd);
-      if (entry.desc) {
-        const desc = document.createElement("p");
-        desc.className = "row-desc";
-        desc.textContent = entry.desc;
-        main.append(desc);
+      if (entry.type === "help") {
+        frag.append(renderHelp(entry));
+        continue;
       }
-
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "copy-btn";
-      btn.textContent = "COPY";
-      btn.setAttribute("aria-label", `Copy ${entry.cmd}`);
-      btn.addEventListener("click", () => copyText(entry.cmd, btn));
-
-      row.append(main, btn);
-      frag.append(row);
+      if (entry.type === "section") {
+        frag.append(renderSection(entry));
+        continue;
+      }
+      frag.append(renderRow(entry, inlineDesc));
     }
     catalog.append(frag);
   }
