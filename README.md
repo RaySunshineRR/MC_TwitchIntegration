@@ -25,6 +25,21 @@ python3 -m http.server 8080
 
 Then visit http://localhost:8080
 
+## Item icons
+
+Vanilla **1.20.1** item/block textures are packed into:
+
+- `assets/atlas.png` — sprite sheet
+- `assets/atlas.json` — id → UV map (+ `_aliases`)
+
+Rebuild from the local Prism client jar:
+
+```bash
+python3 tools/build-atlas.py
+```
+
+Icons show on **Items / Equipment / Arrows / Potions**.
+
 ## Enable GitHub Pages
 
 1. Repo **Settings → Pages**

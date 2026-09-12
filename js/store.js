@@ -5,6 +5,8 @@
     return;
   }
 
+  const ICON_TABS = new Set(["items", "equipment", "potions", "arrows"]);
+
   const tabs = Array.from(document.querySelectorAll(".tab"));
   const catalog = document.getElementById("catalog");
   const empty = document.getElementById("empty");
@@ -14,6 +16,7 @@
 
   let activeTab = "items";
   let toastTimer = 0;
+  let atlas = null;
 
   function entriesFor(tab) {
     return Array.isArray(store[tab]) ? store[tab] : [];
@@ -64,6 +67,47 @@
     }, 1200);
   }
 
+  function itemIdFromCmd(cmd) {
+    if (!cmd || !cmd.startsWith("#give")) return null;
+    const m = cmd.match(/^#give\s+(?:@)?(?:minecraft:)?([a-z0-9_]+)/i);
+    return m ? m[1].toLowerCase() : null;
+  }
+
+  function resolveIconId(itemId) {
+    if (!itemId || !atlas) return null;
+    if (atlas[itemId]) return itemId;
+    const aliases = atlas._aliases || {};
+    if (aliases[itemId] && atlas[aliases[itemId]]) return aliases[itemId];
+    // tipped / potion carriers already match texture names mostly
+    if (itemId === "arrow") return atlas.arrow ? "arrow" : null;
+    return null;
+  }
+
+  function makeIcon(itemId) {
+    const wrap = document.createElement("div");
+    wrap.className = "icon";
+    wrap.setAttribute("aria-hidden", "true");
+
+    const key = resolveIconId(itemId);
+    if (!key || !atlas || !atlas[key]) {
+      wrap.classList.add("icon-missing");
+      return wrap;
+    }
+
+    const uv = atlas[key];
+    const tile = (atlas._meta && atlas._meta.tile) || 16;
+    const scale = 2; // show 32px from 16px tiles
+    const el = document.createElement("span");
+    el.className = "icon-sprite";
+    el.style.width = `${tile * scale}px`;
+    el.style.height = `${tile * scale}px`;
+    el.style.backgroundImage = "url('assets/atlas.png')";
+    el.style.backgroundPosition = `-${uv.x * scale}px -${uv.y * scale}px`;
+    el.style.backgroundSize = `${(atlas._meta.cols * tile) * scale}px ${(atlas._meta.rows * tile) * scale}px`;
+    wrap.append(el);
+    return wrap;
+  }
+
   function renderHelp(entry) {
     const el = document.createElement("p");
     el.className = "help-line";
@@ -78,9 +122,13 @@
     return el;
   }
 
-  function renderRow(entry, inlineDesc) {
+  function renderRow(entry, inlineDesc, withIcon) {
     const row = document.createElement("article");
-    row.className = "row";
+    row.className = withIcon ? "row row-icon" : "row";
+
+    if (withIcon) {
+      row.append(makeIcon(itemIdFromCmd(entry.cmd)));
+    }
 
     const main = document.createElement("div");
     main.className = "row-main";
@@ -135,6 +183,7 @@
 
     const frag = document.createDocumentFragment();
     const inlineDesc = activeTab === "curses";
+    const withIcon = ICON_TABS.has(activeTab);
 
     for (const entry of list) {
       if (entry.type === "help") {
@@ -145,7 +194,7 @@
         frag.append(renderSection(entry));
         continue;
       }
-      frag.append(renderRow(entry, inlineDesc));
+      frag.append(renderRow(entry, inlineDesc, withIcon));
     }
     catalog.append(frag);
   }
@@ -165,5 +214,15 @@
   }
 
   search.addEventListener("input", render);
-  setTab(activeTab);
+
+  fetch("assets/atlas.json")
+    .then((r) => r.json())
+    .then((data) => {
+      atlas = data;
+      setTab(activeTab);
+    })
+    .catch((err) => {
+      console.warn("Atlas failed to load; icons disabled", err);
+      setTab(activeTab);
+    });
 })();

@@ -222,9 +222,35 @@ body {
   transition: background 0.15s, border-color 0.15s;
 }
 
+.row-icon {
+  grid-template-columns: 36px 1fr auto;
+}
+
 .row:hover {
   background: var(--bg-row-hover);
   border-color: #2f5a42;
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  image-rendering: pixelated;
+}
+
+.icon-sprite {
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  background-repeat: no-repeat;
+}
+
+.icon-missing {
+  opacity: 0.25;
+  border: 1px dashed var(--line);
+  border-radius: 2px;
 }
 
 .row-main {
@@ -354,6 +380,11 @@ body {
   .row {
     grid-template-columns: 1fr auto;
     align-items: start;
+  }
+
+  .row-icon {
+    grid-template-columns: 36px 1fr auto;
+    align-items: center;
   }
 
   .copy-btn {
