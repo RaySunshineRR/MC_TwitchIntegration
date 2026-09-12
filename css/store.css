@@ -247,6 +247,14 @@ body {
   background-repeat: no-repeat;
 }
 
+.icon-img {
+  display: block;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
 .icon-missing {
   opacity: 0.25;
   border: 1px dashed var(--line);
