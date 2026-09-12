@@ -1,0 +1,335 @@
+:root {
+  --bg: #07110e;
+  --bg-panel: #0d1a15;
+  --bg-row: #102019;
+  --bg-row-hover: #152a20;
+  --line: #1f3a2c;
+  --text: #e8f5ec;
+  --muted: #8aab97;
+  --emerald: #2fdd7a;
+  --emerald-dim: #1a9a4f;
+  --emerald-ink: #04140c;
+  --gold: #c9a227;
+  --danger: #e85d5d;
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+  --radius: 4px;
+  --font: "Press Start 2P", ui-monospace, monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+.bg-grid,
+.bg-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(47, 221, 122, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(47, 221, 122, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 20%, transparent 75%);
+}
+
+.bg-glow {
+  background:
+    radial-gradient(ellipse 50% 40% at 50% -10%, rgba(47, 221, 122, 0.18), transparent 60%),
+    radial-gradient(ellipse 30% 25% at 90% 20%, rgba(201, 162, 39, 0.08), transparent 50%);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.hero,
+.tabs,
+.store,
+.foot {
+  position: relative;
+  z-index: 1;
+  width: min(980px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+.hero {
+  padding: 3.5rem 0 1.75rem;
+  animation: rise 0.7s ease-out both;
+}
+
+.eyebrow {
+  margin: 0 0 1rem;
+  color: var(--gold);
+  font-size: 0.55rem;
+  letter-spacing: 0.04em;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(1.6rem, 5vw, 2.75rem);
+  line-height: 1.35;
+  text-shadow: 0 0 40px rgba(47, 221, 122, 0.25);
+}
+
+.tagline {
+  margin: 1.25rem 0 0;
+  color: var(--muted);
+  font-size: 0.58rem;
+  max-width: 36rem;
+}
+
+.search-wrap {
+  margin-top: 1.75rem;
+}
+
+#search {
+  width: 100%;
+  padding: 0.95rem 1rem;
+  border: 2px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-panel);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 0.55rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#search::placeholder {
+  color: #5f7d6c;
+}
+
+#search:focus {
+  border-color: var(--emerald);
+  box-shadow: 0 0 0 3px rgba(47, 221, 122, 0.15);
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  padding: 0.25rem 0 1rem;
+  animation: rise 0.7s ease-out 0.08s both;
+}
+
+.tab {
+  appearance: none;
+  border: 2px solid var(--line);
+  background: var(--bg-panel);
+  color: var(--muted);
+  font-family: var(--font);
+  font-size: 0.5rem;
+  padding: 0.7rem 0.85rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.15s;
+}
+
+.tab:hover {
+  color: var(--text);
+  border-color: #2c5540;
+  transform: translateY(-1px);
+}
+
+.tab.is-active {
+  background: var(--emerald);
+  border-color: var(--emerald);
+  color: var(--emerald-ink);
+}
+
+.store {
+  padding-bottom: 3rem;
+  animation: rise 0.7s ease-out 0.14s both;
+}
+
+.store-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+  color: var(--muted);
+  font-size: 0.48rem;
+}
+
+.catalog {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.75rem 1rem;
+  align-items: center;
+  padding: 0.9rem 1rem;
+  background: var(--bg-row);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.row:hover {
+  background: var(--bg-row-hover);
+  border-color: #2f5a42;
+}
+
+.row-main {
+  min-width: 0;
+}
+
+.row-name {
+  margin: 0 0 0.45rem;
+  font-size: 0.58rem;
+  color: var(--text);
+}
+
+.row-cmd {
+  margin: 0;
+  font-size: 0.48rem;
+  color: var(--emerald);
+  word-break: break-word;
+  line-height: 1.7;
+}
+
+.row-desc {
+  margin: 0.55rem 0 0;
+  font-size: 0.45rem;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.copy-btn {
+  appearance: none;
+  border: 2px solid var(--emerald);
+  background: var(--emerald);
+  color: var(--emerald-ink);
+  font-family: var(--font);
+  font-size: 0.5rem;
+  padding: 0.7rem 0.85rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 0 18px rgba(47, 221, 122, 0.2);
+}
+
+.copy-btn:hover {
+  background: #54e892;
+  transform: translateY(-1px);
+}
+
+.copy-btn:active {
+  transform: translateY(0);
+}
+
+.copy-btn.is-copied {
+  background: var(--emerald-dim);
+  border-color: var(--emerald-dim);
+  color: #dfffea;
+}
+
+.empty {
+  margin: 2rem 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.55rem;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.foot {
+  padding: 1.5rem 0 3rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.45rem;
+  line-height: 1.9;
+}
+
+.foot a {
+  color: var(--emerald);
+  text-decoration: none;
+}
+
+.foot a:hover {
+  text-decoration: underline;
+}
+
+.foot code {
+  color: var(--gold);
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1.5rem;
+  transform: translateX(-50%) translateY(120%);
+  z-index: 20;
+  padding: 0.85rem 1.1rem;
+  background: var(--emerald);
+  color: var(--emerald-ink);
+  border-radius: var(--radius);
+  font-size: 0.55rem;
+  box-shadow: var(--shadow);
+  transition: transform 0.25s ease;
+}
+
+.toast.is-on {
+  transform: translateX(-50%) translateY(0);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+
+  .copy-btn {
+    width: 100%;
+  }
+
+  .hero {
+    padding-top: 2.25rem;
+  }
+}
