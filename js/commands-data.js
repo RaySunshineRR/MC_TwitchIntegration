@@ -9,9 +9,10 @@ window.TWITCHCRAFT_STORE = {
   items: [
     // Priority starter pack
     { name: "Enchanting Bottle", cmd: "#give experience_bottle 16" },
-    { name: "Iron Ingot", cmd: "#give iron_ingot 32" },
-    { name: "Gold Ingot", cmd: "#give gold_ingot 32" },
-    { name: "Diamond", cmd: "#give diamond 16" },
+    { name: "Enchanted Golden Apple", cmd: "#give enchanted_golden_apple 1" },
+    { name: "Iron Ingot", cmd: "#give iron_ingot 8" },
+    { name: "Gold Ingot", cmd: "#give gold_ingot 8" },
+    { name: "Diamond", cmd: "#give diamond 1" },
     { name: "Bow", cmd: "#give bow" },
     { name: "Fishing Rod", cmd: "#give fishing_rod" },
     { name: "Healing Potion", cmd: "#give potion[healing]" },
@@ -65,7 +66,7 @@ window.TWITCHCRAFT_STORE = {
     { name: "Oak Planks", cmd: "#give oak_planks 64" },
     { name: "Spruce Log", cmd: "#give spruce_log 32" },
     { name: "Birch Log", cmd: "#give birch_log 32" },
-    { name: "Copper Ingot", cmd: "#give copper_ingot 32" },
+    { name: "Copper Ingot", cmd: "#give copper_ingot 8" },
     { name: "Lapis Lazuli", cmd: "#give lapis_lazuli 32" },
     { name: "Redstone", cmd: "#give redstone 32" },
     { name: "Emerald", cmd: "#give emerald 8" },
