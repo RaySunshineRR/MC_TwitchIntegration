@@ -212,9 +212,9 @@ body {
 .row {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 0.3rem 0.55rem;
+  gap: 0.2rem 0.4rem;
   align-items: center;
-  padding: 0.35rem 0.5rem;
+  padding: 0.18rem 0.3rem;
   background: var(--bg-row);
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -291,7 +291,7 @@ body {
   color: var(--emerald-ink);
   font-family: var(--font);
   font-size: 0.48rem;
-  padding: 0.4rem 0.5rem;
+  padding: 0.3rem 0.4rem;
   border-radius: var(--radius);
   cursor: pointer;
   white-space: nowrap;
