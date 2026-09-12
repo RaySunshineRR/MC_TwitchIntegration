@@ -7,6 +7,10 @@ window.TWITCHCRAFT_STORE = {
   },
 
   items: [
+    {
+      type: "help",
+      text: "Any vanilla item works with #give — this list is just a starter guide.",
+    },
     // Priority starter pack
     { name: "Enchanting Bottle", cmd: "#give experience_bottle 16" },
     { name: "Enchanted Golden Apple", cmd: "#give enchanted_golden_apple 1" },
