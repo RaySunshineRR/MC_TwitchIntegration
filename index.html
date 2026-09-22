@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TwitchCraft Command Store</title>
+  <meta name="description" content="Copy TwitchCraft #commands for Twitch chat — items, equipment, arrows, books, potions, curses." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/store.css" />
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <header class="hero">
+    <p class="eyebrow">0x TwitchCraft · GitHub library</p>
+    <h1>Command Store</h1>
+    <p class="tagline">Pick a tab · hit COPY · paste in Twitch chat</p>
+    <div class="search-wrap">
+      <label class="sr-only" for="search">Search commands</label>
+      <input id="search" type="search" placeholder="Search name or #command…" autocomplete="off" />
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Command categories">
+    <button class="tab is-active" role="tab" aria-selected="true" data-tab="items">Items</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="equipment">Equipment</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="arrows">Arrows</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="books">Books</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="potions">Potions</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="curses">Curses</button>
+  </nav>
+
+  <main class="store">
+    <div class="store-meta">
+      <span id="count-label">0 commands</span>
+      <span class="hint">Shorthand forms · Twitch-ready</span>
+    </div>
+    <div id="catalog" class="catalog" role="tabpanel"></div>
+    <p id="empty" class="empty hidden">No matches in this tab.</p>
+  </main>
+
+  <footer class="foot">
+    <p>Prefix <code>#</code> · Streamer settings can rename tags, blacklist items, or disable categories.</p>
+    <p><a href="https://github.com/RaySunshineRR/MC_TwitchIntegration">github.com/RaySunshineRR/MC_TwitchIntegration</a></p>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden>Copied</div>
+
+  <script src="js/commands-data.js"></script>
+  <script src="js/store.js"></script>
+</body>
+</html>
