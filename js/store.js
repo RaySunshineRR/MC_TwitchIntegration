@@ -109,6 +109,22 @@
     return m ? m[1].toLowerCase() : null;
   }
 
+  function playerHeadName(cmd) {
+    if (!cmd) return null;
+    const m = cmd.match(/^#give\s+(?:@)?(?:minecraft:)?player_head\[([^\]]+)\]/i);
+    if (!m) return null;
+    let inner = m[1].trim();
+    inner = inner.replace(/^skullowner\s*[:=]\s*/i, "");
+    if (inner.startsWith("\"") && inner.endsWith("\"") && inner.length >= 2) {
+      inner = inner.slice(1, -1).trim();
+    }
+    return inner.toLowerCase();
+  }
+
+  const HEAD_ICONS = {
+    skullbott: "assets/heads/skullbott.png",
+  };
+
   function effectKeyFromCmd(cmd) {
     if (!cmd) return null;
     const bracket = cmd.match(/\[([^\]]+)\]/);
@@ -210,6 +226,18 @@
     wrap.setAttribute("aria-hidden", "true");
 
     const itemId = itemIdFromCmd(cmd);
+    const headIcon = HEAD_ICONS[playerHeadName(cmd)];
+    if (headIcon) {
+      const img = document.createElement("img");
+      img.className = "icon-img";
+      img.src = headIcon;
+      img.width = 32;
+      img.height = 32;
+      img.alt = "";
+      wrap.append(img);
+      return wrap;
+    }
+
     const effectKey = effectKeyFromCmd(cmd);
     const tint = tintLayersFor(itemId, effectKey);
 

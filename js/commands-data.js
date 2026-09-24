@@ -13,9 +13,9 @@ window.TWITCHCRAFT_STORE = {
     },
     {
       type: "help",
-      text: "Player heads: #give player_head[SkullBot] (or SkullOwner=Name).",
+      text: "Player heads: #give player_head[SkullBott] (or SkullOwner:\"Name\").",
     },
-    { name: "Player Head (SkullBot)", cmd: "#give player_head[SkullBot]" },
+    { name: "Player Head (SkullBott)", cmd: "#give player_head[SkullBott]" },
     // Priority starter pack
     { name: "Enchanting Bottle", cmd: "#give experience_bottle 16" },
     { name: "Enchanted Golden Apple", cmd: "#give enchanted_golden_apple 1" },
@@ -263,7 +263,7 @@ window.TWITCHCRAFT_STORE = {
     { name: "Bokuto", cmd: "#bokuto", desc: "Swords → sticks 67s, then restore." },
     { name: "Butterfingers", cmd: "#butterfingers", desc: "Break/hit drops held item 67s." },
     { name: "Cloning", cmd: "#cloning", desc: "Hit mob → full-HP clone(s) 67s." },
-    { name: "Angry Bee", cmd: "#angrybee", desc: "SunnyBeem throws spawn eggs at you." },
+    { name: "Angry Bee", cmd: "#angrybee", desc: "SunnyBeem throws spawn eggs at you; kill → honey bottle." },
     { name: "Cockbomb", cmd: "#cockbomb", desc: "Mr Nugget creeper-chicken (10% invisible, iron armour); kill → iron." },
     { name: "Crop Rot", cmd: "#croprot", desc: "Reset crops in chunk to stage 0." },
     { name: "Disarm", cmd: "#disarm", desc: "Drop main hand." },
