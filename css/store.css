@@ -281,6 +281,10 @@ body {
   line-height: 1.4;
 }
 
+.cmd-mark {
+  color: #ff3b3b;
+}
+
 .cmd-desc {
   color: var(--muted);
   font-size: 0.5rem;

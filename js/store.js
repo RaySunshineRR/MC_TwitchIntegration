@@ -289,6 +289,26 @@
     return el;
   }
 
+  function fillCommandText(el, cmd) {
+    const text = cmd || "";
+    const re = /#|\[|\]/g;
+    let last = 0;
+    let match;
+    while ((match = re.exec(text))) {
+      if (match.index > last) {
+        el.append(document.createTextNode(text.slice(last, match.index)));
+      }
+      const mark = document.createElement("span");
+      mark.className = "cmd-mark";
+      mark.textContent = match[0];
+      el.append(mark);
+      last = match.index + match[0].length;
+    }
+    if (last < text.length) {
+      el.append(document.createTextNode(text.slice(last)));
+    }
+  }
+
   function renderRow(entry, inlineDesc, withIcon) {
     const row = document.createElement("article");
     row.className = withIcon ? "row row-icon" : "row";
@@ -309,7 +329,7 @@
 
     const cmd = document.createElement("span");
     cmd.className = "cmd-text";
-    cmd.textContent = entry.cmd;
+    fillCommandText(cmd, entry.cmd);
     cmdLine.append(cmd);
 
     if (inlineDesc && entry.desc) {
