@@ -259,6 +259,7 @@ window.TWITCHCRAFT_STORE = {
   curses: [
     { name: "Armour Up", cmd: "#armourup", desc: "Resistance III 67s." },
     { name: "Bad Bat", cmd: "#badbat", desc: "Charles_F4ng steals a hotbar item, glows, flees; Charles clip + gold trails." },
+    { name: "Bad Knight", cmd: "#badknight", desc: "GraveKeeper skeleton on a skeleton horse; kill → skeleton skull." },
     { name: "Bad Potato", cmd: "#badpotato", desc: "Crafts → poisonous potato 67s." },
     { name: "Blink", cmd: "#blink", desc: "Safe random TP ~16 blocks." },
     { name: "Bokuto", cmd: "#bokuto", desc: "Swords → sticks 67s, then restore." },
