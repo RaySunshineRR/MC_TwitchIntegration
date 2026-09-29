@@ -306,6 +306,7 @@ window.TWITCHCRAFT_STORE = {
     { name: "Fool's Gold", cmd: "#foolsgold", desc: "Ores drop dirt 67s." },
     { name: "Gravel", cmd: "#gravel", desc: "Gravel ahead on a loop ~67s." },
     { name: "Hiccups", cmd: "#hiccups", desc: "Auto-jump every 1s 67s." },
+    { name: "Howler", cmd: "#howler", desc: "Flying mail letter follows you; right-click to open — then it howls and damages until done." },
     { name: "Hungry", cmd: "#hungry", desc: "Hunger 67s." },
     { name: "Infested", cmd: "#infested", desc: "Stone/natural → silverfish 67s." },
     { name: "Jail", cmd: "#jail", desc: "Glass box ~15s, then restore." },
