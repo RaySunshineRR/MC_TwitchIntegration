@@ -369,7 +369,7 @@
     countLabel.textContent = `${copyable.length} command${copyable.length === 1 ? "" : "s"}`;
 
     const frag = document.createDocumentFragment();
-    const inlineDesc = activeTab === "curses";
+    const inlineDesc = activeTab === "curses" || activeTab === "useful";
     const withIcon = ICON_TABS.has(activeTab);
 
     for (const entry of list) {
