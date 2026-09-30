@@ -359,18 +359,75 @@
     return row;
   }
 
+  const MOB_COLUMNS = ["Hostile", "Neutral", "Ally"];
+
+  function splitMobColumns(list) {
+    const help = [];
+    const cols = Object.fromEntries(MOB_COLUMNS.map((t) => [t, []]));
+    let current = null;
+    for (const entry of list) {
+      if (entry.type === "help") {
+        help.push(entry);
+        continue;
+      }
+      if (entry.type === "section") {
+        current = MOB_COLUMNS.includes(entry.title) ? entry.title : null;
+        continue;
+      }
+      if (current) {
+        cols[current].push(entry);
+      }
+    }
+    return { help, cols };
+  }
+
+  function renderMobsLayout(list, frag) {
+    const { help, cols } = splitMobColumns(list);
+    for (const entry of help) {
+      frag.append(renderHelp(entry));
+    }
+    const grid = document.createElement("div");
+    grid.className = "mobs-grid";
+    for (const title of MOB_COLUMNS) {
+      const col = document.createElement("section");
+      col.className = "mobs-col";
+      col.append(renderSection({ title }));
+      const items = cols[title] || [];
+      if (items.length === 0) {
+        const blank = document.createElement("p");
+        blank.className = "mobs-col-empty";
+        blank.textContent = "—";
+        col.append(blank);
+      } else {
+        for (const entry of items) {
+          col.append(renderRow(entry, false, false));
+        }
+      }
+      grid.append(col);
+    }
+    frag.append(grid);
+  }
+
   function render() {
     const q = (search.value || "").trim().toLowerCase();
     const list = entriesFor(activeTab).filter((e) => matches(e, q));
     catalog.innerHTML = "";
+    catalog.classList.toggle("is-mobs", activeTab === "mobs");
+    document.body.classList.toggle("is-mobs-tab", activeTab === "mobs");
 
     const copyable = list.filter((e) => e.cmd);
     empty.classList.toggle("hidden", list.length > 0);
     countLabel.textContent = `${copyable.length} command${copyable.length === 1 ? "" : "s"}`;
 
     const frag = document.createDocumentFragment();
-    const inlineDesc = activeTab === "curses" || activeTab === "useful" || activeTab === "mobs";
+    const inlineDesc = activeTab === "curses" || activeTab === "useful";
     const withIcon = ICON_TABS.has(activeTab);
+
+    if (activeTab === "mobs") {
+      renderMobsLayout(list, frag);
+      catalog.append(frag);
+      return;
+    }
 
     for (const entry of list) {
       if (entry.type === "help") {

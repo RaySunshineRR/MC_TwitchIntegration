@@ -79,6 +79,13 @@ body {
   margin-inline: auto;
 }
 
+body.is-mobs-tab .hero,
+body.is-mobs-tab .tabs,
+body.is-mobs-tab .store,
+body.is-mobs-tab .foot {
+  width: min(1180px, calc(100% - 1.25rem));
+}
+
 .hero {
   padding: 1rem 0 0.55rem;
   animation: rise 0.7s ease-out both;
@@ -207,6 +214,64 @@ body {
 
 .section-title:first-child {
   margin-top: 0.1rem;
+}
+
+.mobs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem 0.7rem;
+  align-items: start;
+}
+
+.mobs-col {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+}
+
+.mobs-col .section-title {
+  margin: 0 0 0.1rem;
+  padding: 0.2rem 0.15rem 0.25rem;
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+
+.mobs-col .row {
+  padding: 0.14rem 0.25rem;
+  gap: 0.15rem 0.3rem;
+}
+
+.mobs-col .row-name {
+  margin: 0 0 0.06rem;
+  font-size: 0.52rem;
+}
+
+.mobs-col .row-cmd {
+  font-size: 0.46rem;
+}
+
+.mobs-col .copy-btn {
+  font-size: 0.4rem;
+  padding: 0.22rem 0.32rem;
+}
+
+.mobs-col-empty {
+  margin: 0.2rem 0 0;
+  color: var(--muted);
+  font-size: 0.48rem;
+  text-align: center;
+}
+
+@media (max-width: 860px) {
+  .mobs-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .mobs-col .section-title {
+    text-align: left;
+  }
 }
 
 .row {
