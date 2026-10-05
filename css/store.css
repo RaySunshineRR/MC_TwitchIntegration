@@ -172,6 +172,15 @@ body.is-mobs-tab .foot {
   color: var(--emerald-ink);
 }
 
+.tab-cursed-arrow {
+  color: #ff3b3b;
+  font-weight: 700;
+}
+
+.tab-cursed.is-active .tab-cursed-arrow {
+  color: #ff3b3b;
+}
+
 .store {
   padding-bottom: 0.5rem;
   animation: rise 0.7s ease-out 0.14s both;
