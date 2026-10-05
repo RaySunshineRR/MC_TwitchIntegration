@@ -172,13 +172,13 @@ body.is-mobs-tab .foot {
   color: var(--emerald-ink);
 }
 
-.tab-cursed-arrow {
+/* Pixel font has no bold weight — fake weight with shadow; color must beat .tab:hover / .is-active inherit. */
+.tab.tab-cursed > .tab-cursed-arrow,
+.tab.tab-cursed:hover > .tab-cursed-arrow,
+.tab.tab-cursed.is-active > .tab-cursed-arrow {
   color: #ff3b3b;
-  font-weight: 700;
-}
-
-.tab-cursed.is-active .tab-cursed-arrow {
-  color: #ff3b3b;
+  font-weight: inherit;
+  text-shadow: 0.07em 0 0 currentColor, -0.07em 0 0 currentColor;
 }
 
 .store {
