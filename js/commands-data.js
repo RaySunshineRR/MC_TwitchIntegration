@@ -22,6 +22,7 @@ window.TWITCHCRAFT_STORE = {
     { name: "Iron Ingot", cmd: "#give iron_ingot 8" },
     { name: "Gold Ingot", cmd: "#give gold_ingot 8" },
     { name: "Diamond", cmd: "#give diamond 1" },
+    { name: "Villager Spawn Egg", cmd: "#give villager_spawn_egg 1" },
     { name: "Bow", cmd: "#give bow" },
     { name: "Fishing Rod", cmd: "#give fishing_rod" },
     { name: "Healing Potion", cmd: "#give potion[healing]" },

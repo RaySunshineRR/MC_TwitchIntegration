@@ -146,12 +146,24 @@
     return POTION_COLORS[bare] != null ? POTION_COLORS[bare] : POTION_COLORS.water;
   }
 
+  // Vanilla 1.20.1 SpawnEggItem primary/secondary colors (decimal).
+  const SPAWN_EGG_COLORS = {
+    villager: [0x563c33, 0xbd8b72],
+  };
+
+  function spawnEggColors(itemId) {
+    if (!itemId || !itemId.endsWith("_spawn_egg")) return null;
+    const mob = itemId.slice(0, -"_spawn_egg".length);
+    return SPAWN_EGG_COLORS[mob] || null;
+  }
+
   function resolveIconId(itemId) {
     if (!itemId || !atlas) return null;
     if (atlas[itemId]) return itemId;
     const aliases = atlas._aliases || {};
     if (aliases[itemId] && atlas[aliases[itemId]]) return aliases[itemId];
     if (itemId === "arrow") return atlas.arrow ? "arrow" : null;
+    if (itemId.endsWith("_spawn_egg") && atlas.spawn_egg) return "spawn_egg";
     return null;
   }
 
@@ -181,6 +193,28 @@
     return true;
   }
 
+  function tintDrawnTile(ctx, key, colorDec, size) {
+    const tmp = document.createElement("canvas");
+    tmp.width = size;
+    tmp.height = size;
+    const tctx = tmp.getContext("2d");
+    if (!drawAtlasTile(tctx, key, 0, 0, size)) return false;
+    const img = tctx.getImageData(0, 0, size, size);
+    const r = (colorDec >> 16) & 255;
+    const g = (colorDec >> 8) & 255;
+    const b = colorDec & 255;
+    const d = img.data;
+    for (let i = 0; i < d.length; i += 4) {
+      if (d[i + 3] === 0) continue;
+      d[i] = (d[i] * r) / 255;
+      d[i + 1] = (d[i + 1] * g) / 255;
+      d[i + 2] = (d[i + 2] * b) / 255;
+    }
+    tctx.putImageData(img, 0, 0);
+    ctx.drawImage(tmp, 0, 0);
+    return true;
+  }
+
   function composeTintedIcon(baseKey, overlayKey, colorDec) {
     const cacheKey = `${baseKey}|${overlayKey}|${colorDec}`;
     if (tintCache.has(cacheKey)) return tintCache.get(cacheKey);
@@ -192,29 +226,39 @@
     const ctx = canvas.getContext("2d");
 
     // Overlay first (tinted), then bottle/base on top — matches MC item model layers.
-    const ov = document.createElement("canvas");
-    ov.width = size;
-    ov.height = size;
-    const octx = ov.getContext("2d");
-    if (!drawAtlasTile(octx, overlayKey, 0, 0, size)) {
+    if (!tintDrawnTile(ctx, overlayKey, colorDec, size)) {
       tintCache.set(cacheKey, null);
       return null;
     }
-    const img = octx.getImageData(0, 0, size, size);
-    const r = (colorDec >> 16) & 255;
-    const g = (colorDec >> 8) & 255;
-    const b = colorDec & 255;
-    const d = img.data;
-    for (let i = 0; i < d.length; i += 4) {
-      if (d[i + 3] === 0) continue;
-      d[i] = (d[i] * r) / 255;
-      d[i + 1] = (d[i + 1] * g) / 255;
-      d[i + 2] = (d[i + 2] * b) / 255;
-    }
-    octx.putImageData(img, 0, 0);
-    ctx.drawImage(ov, 0, 0);
     drawAtlasTile(ctx, baseKey, 0, 0, size);
 
+    const url = canvas.toDataURL("image/png");
+    tintCache.set(cacheKey, url);
+    return url;
+  }
+
+  /** Spawn eggs: layer0 primary + layer1 secondary (both tinted). */
+  function composeSpawnEggIcon(primary, secondary) {
+    const cacheKey = `spawn_egg|${primary}|${secondary}`;
+    if (tintCache.has(cacheKey)) return tintCache.get(cacheKey);
+
+    const size = 32;
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext("2d");
+    if (!atlas.spawn_egg || !atlas.spawn_egg_overlay) {
+      tintCache.set(cacheKey, null);
+      return null;
+    }
+    if (!tintDrawnTile(ctx, "spawn_egg", primary, size)) {
+      tintCache.set(cacheKey, null);
+      return null;
+    }
+    if (!tintDrawnTile(ctx, "spawn_egg_overlay", secondary, size)) {
+      tintCache.set(cacheKey, null);
+      return null;
+    }
     const url = canvas.toDataURL("image/png");
     tintCache.set(cacheKey, url);
     return url;
@@ -236,6 +280,21 @@
       img.alt = "";
       wrap.append(img);
       return wrap;
+    }
+
+    const eggColors = spawnEggColors(itemId);
+    if (eggColors && atlasImg) {
+      const url = composeSpawnEggIcon(eggColors[0], eggColors[1]);
+      if (url) {
+        const img = document.createElement("img");
+        img.className = "icon-img";
+        img.src = url;
+        img.width = 32;
+        img.height = 32;
+        img.alt = "";
+        wrap.append(img);
+        return wrap;
+      }
     }
 
     const effectKey = effectKeyFromCmd(cmd);
