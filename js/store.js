@@ -398,6 +398,42 @@
     }
   }
 
+  function giveCount(cmd) {
+    if (!cmd || !/^#give\b/i.test(cmd)) return 1;
+    const parts = String(cmd).trim().split(/\s+/);
+    const last = parts[parts.length - 1];
+    if (parts.length >= 3 && /^\d+$/.test(last)) {
+      const n = parseInt(last, 10);
+      return n > 0 ? n : 1;
+    }
+    return 1;
+  }
+
+  function cleanItemName(name, count) {
+    let s = String(name || "").trim();
+    if (count > 1) {
+      s = s.replace(/\s*[×xX]\s*\d+\s*$/u, "").trim();
+    }
+    return s;
+  }
+
+  function fillNameWithQty(el, entry) {
+    const count = giveCount(entry.cmd);
+    const label = cleanItemName(entry.name || "", count) || entry.name || "";
+    el.textContent = "";
+    el.append(document.createTextNode(label));
+    if (count > 1) {
+      el.append(document.createTextNode(" "));
+      const qty = document.createElement("span");
+      qty.className = "row-qty";
+      const hash = document.createElement("span");
+      hash.className = "row-qty-hash";
+      hash.textContent = "#";
+      qty.append(hash, document.createTextNode(String(count)));
+      el.append(qty);
+    }
+  }
+
   function renderRow(entry, inlineDesc, withIcon) {
     const row = document.createElement("article");
     row.className = withIcon ? "row row-icon" : "row";
@@ -411,7 +447,11 @@
 
     const name = document.createElement("h2");
     name.className = "row-name";
-    name.textContent = entry.name;
+    if (entry.cmd && /^#give\b/i.test(entry.cmd)) {
+      fillNameWithQty(name, entry);
+    } else {
+      name.textContent = entry.name;
+    }
 
     const cmdLine = document.createElement("p");
     cmdLine.className = "row-cmd";
