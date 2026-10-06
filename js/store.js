@@ -5,7 +5,7 @@
     return;
   }
 
-  const ICON_TABS = new Set(["items", "equipment", "potions", "arrows"]);
+  const ICON_TABS = new Set(["items", "equipment", "potions", "arrows", "books"]);
 
   const tabs = Array.from(document.querySelectorAll(".tab"));
   const catalog = document.getElementById("catalog");
@@ -124,6 +124,23 @@
   const HEAD_ICONS = {
     skullbott: "assets/heads/skullbott.png",
   };
+
+  /** NekosEnchantedBooks per-enchant textures under assets/books/{id}.png */
+  function bookEnchantKey(cmd) {
+    if (!cmd) return null;
+    const m = cmd.match(/#give\s+(?:@)?(?:minecraft:)?enchanted_book\[([^\]]+)\]/i);
+    if (!m) return null;
+    let inner = m[1].trim().toLowerCase().split(",")[0].trim();
+    inner = inner.replace(/^enchantments\s*=\s*\{levels:\s*\{(?:minecraft:)?([^:}]+).*/i, "$1");
+    inner = inner.replace(/\s+\d+$/, "").replace(/\s+/g, "_").replace(/_+/g, "_");
+    if (inner === "sweeping_edge") inner = "sweeping";
+    return inner || null;
+  }
+
+  function bookIconPath(cmd) {
+    const key = bookEnchantKey(cmd);
+    return key ? `assets/books/${key}.png` : null;
+  }
 
   function effectKeyFromCmd(cmd) {
     if (!cmd) return null;
@@ -278,6 +295,19 @@
       img.width = 32;
       img.height = 32;
       img.alt = "";
+      wrap.append(img);
+      return wrap;
+    }
+
+    const bookIcon = bookIconPath(cmd);
+    if (bookIcon) {
+      const img = document.createElement("img");
+      img.className = "icon-img";
+      img.src = bookIcon;
+      img.width = 32;
+      img.height = 32;
+      img.alt = "";
+      img.onerror = () => wrap.classList.add("icon-missing");
       wrap.append(img);
       return wrap;
     }
