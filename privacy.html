@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TwitchCraft Store — Privacy Notice</title>
+  <style>
+    :root { color-scheme: dark; }
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: #0e0e10;
+      color: #efeff1;
+      line-height: 1.5;
+    }
+    main {
+      max-width: 40rem;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+    h1 { font-size: 1.5rem; margin: 0 0 0.5rem; }
+    h2 { font-size: 1.05rem; margin: 1.5rem 0 0.4rem; }
+    p, li { color: #adadb8; font-size: 0.95rem; }
+    a { color: #bf94ff; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>TwitchCraft Store — Privacy Notice</h1>
+    <p>Last updated: 2026-10-06</p>
+    <p>
+      This Twitch Extension (“TwitchCraft Store”) lets viewers click in-game Minecraft
+      commands on a broadcaster’s stream. It is operated by the channel / developer
+      that installs it (not by Twitch).
+    </p>
+
+    <h2>What we collect</h2>
+    <ul>
+      <li>
+        When you grant <strong>Identity Link</strong>, we receive your Twitch user id
+        from Twitch and may look up your Twitch login (username) so the Minecraft
+        announce can show your name.
+      </li>
+      <li>
+        If you do not link identity, we only receive an opaque Twitch viewer id
+        (or a placeholder such as “viewer”).
+      </li>
+      <li>
+        We receive the command you click (for example <code>#cow</code>) and the
+        channel context needed to run it on that stream’s game.
+      </li>
+    </ul>
+
+    <h2>How we use it</h2>
+    <p>
+      Data is used only to authorize the click, run the matching Minecraft command
+      on the broadcaster’s local game server, and show the normal in-game announce.
+      We do not sell personal data, run third-party ads, or use analytics SDKs in
+      this Extension.
+    </p>
+
+    <h2>Where it is processed</h2>
+    <p>
+      Clicks are sent to the broadcaster’s Extension Backend Service (EBS), which
+      verifies the Twitch Extension JWT and forwards the command to Minecraft on
+      that same machine. Processing happens on the broadcaster’s equipment for the
+      duration of the stream / session.
+    </p>
+
+    <h2>Retention</h2>
+    <p>
+      We do not operate a long-term viewer database for this Extension. Transient
+      request logs may exist only on the broadcaster’s machine while testing or
+      streaming and are not used for marketing.
+    </p>
+
+    <h2>Sharing</h2>
+    <p>
+      We do not share viewer identity with third parties for this feature, other
+      than what Twitch already provides to the Extension and what appears in the
+      public Minecraft chat announce on that stream.
+    </p>
+
+    <h2>Your choices</h2>
+    <p>
+      You can decline Identity Link and still use the store with an opaque id.
+      You can stop using the Extension at any time. Broadcasters can disable the
+      Extension on their channel.
+    </p>
+
+    <h2>Contact</h2>
+    <p>
+      Questions about this notice: contact the channel that runs TwitchCraft
+      (Twitch: raysunshine_rr) or the Extension developer listed in the Twitch
+      Developer Console.
+    </p>
+  </main>
+</body>
+</html>
