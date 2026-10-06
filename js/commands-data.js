@@ -156,8 +156,8 @@ window.TWITCHCRAFT_STORE = {
     { name: "Shield", cmd: "#give shield" },
 
     { type: "section", title: "Arrows" },
-    { name: "Arrow ×64", cmd: "#give arrow 64" },
-    { name: "Spectral Arrow ×16", cmd: "#give spectral_arrow 16" },
+    { name: "Arrow", cmd: "#give arrow 16" },
+    { name: "Spectral Arrow", cmd: "#give spectral_arrow 16" },
     { name: "Fire Resistance", cmd: "#give arrow[fire resistance] 16" },
     { name: "Harming", cmd: "#give arrow[harming] 16" },
     { name: "Harming II", cmd: "#give arrow[harming 2] 16" },
