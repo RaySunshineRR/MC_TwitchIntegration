@@ -411,7 +411,11 @@ window.TWITCHCRAFT_STORE = {
     { name: "Vampirism", cmd: "#vampirism", desc: "Sun burns; night Strength+Regen 67s." },
     { name: "Voidstep", cmd: "#voidstep", desc: "End platform ~67s, then return." },
     { name: "Webbed", cmd: "#webbed", desc: "Cobweb on player (1×2), once." },
-    { name: "Yeet", cmd: "#yeet", desc: "Launch player. Optional #yeet N|S|E|W." },
-    { name: "Yeet Forward", cmd: "#yeet N", desc: "Launch forward (relative to facing)." },
+    { name: "Yeet", cmd: "#yeet", desc: "Random launch (N/S/E/W/U)." },
+    { name: "Yeet N", cmd: "#yeet N", desc: "Launch forward." },
+    { name: "Yeet S", cmd: "#yeet S", desc: "Launch back." },
+    { name: "Yeet E", cmd: "#yeet E", desc: "Launch right." },
+    { name: "Yeet W", cmd: "#yeet W", desc: "Launch left." },
+    { name: "Yeet U", cmd: "#yeet U", desc: "Launch straight up." },
   ],
 };
