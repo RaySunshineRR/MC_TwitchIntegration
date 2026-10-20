@@ -5,7 +5,7 @@
     return;
   }
 
-  const ICON_TABS = new Set(["items", "equipment", "potions", "arrows", "books"]);
+  const ICON_TABS = new Set(["items", "equipment", "potions", "arrows", "books", "mobs"]);
 
   const tabs = Array.from(document.querySelectorAll(".tab"));
   const catalog = document.getElementById("catalog");
@@ -140,6 +140,36 @@
   function bookIconPath(cmd) {
     const key = bookEnchantKey(cmd);
     return key ? `assets/books/${key}.png` : null;
+  }
+
+  /** Command tag → VE+/Xaero mob head under assets/mobs/{id}.png */
+  const MOB_ICON_ALIASES = {
+    cavespider: "cave_spider",
+    zombievillager: "zombie_villager",
+    magmaslime: "magma_cube",
+    elderguardian: "elder_guardian",
+    witherskeleton: "wither_skeleton",
+    piglinbrute: "piglin_brute",
+    glowsquid: "glow_squid",
+    tropicalfish: "tropical_fish",
+    dolphinmob: "dolphin",
+    polarbear: "polar_bear",
+    wanderingtrader: "wandering_trader",
+    skeletonhorse: "skeleton_horse",
+    zombiehorse: "zombie_horse",
+    dog: "wolf",
+    traderllama: "trader_llama",
+    irongolem: "iron_golem",
+    snowgolem: "snow_golem",
+    zombifiedpiglin: "zombified_piglin",
+  };
+
+  function mobIconPath(cmd) {
+    if (!cmd || !cmd.startsWith("#")) return null;
+    const tag = cmd.replace(/^#/, "").trim().toLowerCase().split(/\s+/)[0];
+    if (!tag || tag === "give") return null;
+    const eid = MOB_ICON_ALIASES[tag] || tag;
+    return `assets/mobs/${eid}.png`;
   }
 
   function effectKeyFromCmd(cmd) {
@@ -308,6 +338,23 @@
       img.height = 32;
       img.alt = "";
       img.onerror = () => wrap.classList.add("icon-missing");
+      wrap.append(img);
+      return wrap;
+    }
+
+    const mobIcon = mobIconPath(cmd);
+    if (mobIcon) {
+      const img = document.createElement("img");
+      img.className = "icon-img";
+      img.src = mobIcon;
+      img.width = 32;
+      img.height = 32;
+      img.alt = "";
+      img.style.imageRendering = "pixelated";
+      img.onerror = () => {
+        wrap.classList.add("icon-missing");
+        img.remove();
+      };
       wrap.append(img);
       return wrap;
     }
@@ -529,7 +576,7 @@
         col.append(blank);
       } else {
         for (const entry of items) {
-          col.append(renderRow(entry, false, false));
+          col.append(renderRow(entry, false, true));
         }
       }
       grid.append(col);
@@ -537,15 +584,29 @@
     frag.append(grid);
   }
 
+  function filterEntries(tab, q) {
+    const all = entriesFor(tab);
+    if (!q) return all;
+    // Mobs: always keep Hostile/Neutral/Ally headers so column layout still works.
+    if (tab === "mobs") {
+      return all.filter((e) => {
+        if (e.type === "section" && MOB_COLUMNS.includes(e.title)) return true;
+        if (e.type === "help") return false;
+        return matches(e, q);
+      });
+    }
+    return all.filter((e) => matches(e, q));
+  }
+
   function render() {
     const q = (search.value || "").trim().toLowerCase();
-    const list = entriesFor(activeTab).filter((e) => matches(e, q));
+    const list = filterEntries(activeTab, q);
     catalog.innerHTML = "";
     catalog.classList.toggle("is-mobs", activeTab === "mobs");
     document.body.classList.toggle("is-mobs-tab", activeTab === "mobs");
 
     const copyable = list.filter((e) => e.cmd);
-    empty.classList.toggle("hidden", list.length > 0);
+    empty.classList.toggle("hidden", copyable.length > 0 || (activeTab === "mobs" && !q));
     countLabel.textContent = `${copyable.length} command${copyable.length === 1 ? "" : "s"}`;
 
     const frag = document.createDocumentFragment();
