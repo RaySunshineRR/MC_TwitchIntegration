@@ -5,7 +5,7 @@
     return;
   }
 
-  const ICON_TABS = new Set(["items", "equipment", "potions", "arrows", "books", "mobs"]);
+  const ICON_TABS = new Set(["help", "items", "equipment", "potions", "arrows", "books", "mobs"]);
 
   const tabs = Array.from(document.querySelectorAll(".tab"));
   const catalog = document.getElementById("catalog");

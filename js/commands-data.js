@@ -6,6 +6,16 @@ window.TWITCHCRAFT_STORE = {
     prefix: "#",
   },
 
+  help: [
+    { name: "Netherite Sword", cmd: "#give netherite_sword[smite 5, looting 3, unbreaking 3, mending 1, soulbound 1]" },
+    { name: "Netherite Pickaxe", cmd: "#give netherite_pickaxe[efficiency 3, fortune 3, unbreaking 3, mending 1, soulbound 1]" },
+    { name: "Bow", cmd: "#give bow[power 5, unbreaking 3, infinity 1, soulbound 1]" },
+    { name: "Experience Bottle", cmd: "#give experience_bottle 16" },
+    { name: "Enchanted Golden Apple", cmd: "#give enchanted_golden_apple 16" },
+    { name: "Splash Healing II", cmd: "#give splash_potion[healing 2] 16" },
+    { name: "Bread", cmd: "#give bread 32" },
+  ],
+
   items: [
     {
       type: "help",
@@ -273,7 +283,7 @@ window.TWITCHCRAFT_STORE = {
     { name: "Leap", cmd: "#leap", desc: "Jump Boost III." },
     { name: "Light Up", cmd: "#lightup", desc: "Place a temporary light." },
     { name: "Loot Ping", cmd: "#lootping", desc: "Glow nearby chests & barrels." },
-    { name: "Mend", cmd: "#mend", desc: "Free mending on gear." },
+    { name: "Mend", cmd: "#mend", desc: "Strong repair on held gear and armour." },
     { name: "Night Vision", cmd: "#nightvision", desc: "Night Vision." },
     { name: "Recall Set", cmd: "#recall set", desc: "Set a recall anchor in this dimension." },
     { name: "Recall", cmd: "#recall", desc: "Teleport to this dimension's recall anchor." },
@@ -382,19 +392,19 @@ window.TWITCHCRAFT_STORE = {
 
   curses: [
     { name: "Angry Bee", cmd: "#angrybee", desc: "Bee that pelts you with eggs." },
-    { name: "Bad Bat", cmd: "#badbat", desc: "Steals a hotbar item and flees." },
+    { name: "Bad Bat", cmd: "#badbat", desc: "Steals a hotbar item, mends it, and flees." },
     { name: "Bad Knight", cmd: "#badknight", desc: "Mounted skeleton hunter." },
     { name: "Bad Potato", cmd: "#badpotato", desc: "Crafts become poisonous potatoes." },
     { name: "Blink", cmd: "#blink", desc: "Random short teleport." },
     { name: "Bokuto", cmd: "#bokuto", desc: "Swords become sticks." },
     { name: "Butterfingers", cmd: "#butterfingers", desc: "Hits/breaks drop your held item." },
-    { name: "Cloning", cmd: "#cloning", desc: "Hitting a mob spawns clones (not BiC bosses/elites)." },
+    { name: "Cloning", cmd: "#cloning", desc: "Hitting a mob spawns clones (not BiC bosses, elites, or Krampus henchmen)." },
     { name: "Cockbomb", cmd: "#cockbomb", desc: "Explosive chicken with iron drops." },
     { name: "Crop Rot", cmd: "#croprot", desc: "Reset nearby crops." },
     { name: "Disarm", cmd: "#disarm", desc: "Drop main hand." },
     { name: "Drunk", cmd: "#drunk", desc: "Invert movement & look." },
     { name: "Ender Swap", cmd: "#enderswap", desc: "Swap places when you hit a mob." },
-    { name: "Feral", cmd: "#feral", desc: "Friendly mobs turn hostile." },
+    { name: "Feral", cmd: "#feral", desc: "Friendly mobs turn hostile for 67s, then calm. Not iron golems." },
     { name: "Fool's Gold", cmd: "#foolsgold", desc: "Ores drop dirt." },
     { name: "Gravel", cmd: "#gravel", desc: "Gravel keeps falling ahead." },
     { name: "Haze", cmd: "#haze", desc: "Weed haze: nausea, invert, twirl." },
@@ -407,7 +417,7 @@ window.TWITCHCRAFT_STORE = {
     { name: "Midas", cmd: "#midas", desc: "Kills & ores become raw gold." },
     { name: "Nightmare", cmd: "#nightmare", desc: "Night + angry phantoms." },
     { name: "Raid", cmd: "#raid", desc: "Start a raid / pillagers." },
-    { name: "Rust", cmd: "#rust", desc: "Halve a hotbar item's durability." },
+    { name: "Rust", cmd: "#rust", desc: "Remove up to 100 durability from a hotbar item." },
     { name: "Scates", cmd: "#scates", desc: "Blue-ice slip on every block." },
     { name: "Shrimpy", cmd: "#shrimpy", desc: "Forced crouch + Regen & Strength." },
     { name: "Shuffle", cmd: "#shuffle", desc: "Hotbar keeps reshuffling." },
